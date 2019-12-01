@@ -1,0 +1,140 @@
+建立movie的三个子类（state模式）
+public Movie(String title,int priceCode) {
+	title = title;
+	setPriceCode(priceCode);
+}
+//类似实现继承，不同的电影子类可返回不同的计价，然后将价格再返回到最后的价钱里
+abstract class Price{
+	abstract int getPriceCode();
+}
+class ChildrensPrice extends Price{
+	int getPriceCode() {
+		return Movie.childrens;
+	}
+}
+class FreshPrice extends Price{
+	int getPriceCode() {
+		return Movie.fresh;
+	}
+}
+class RegularPrice extends Price{
+	int getPriceCode() {
+		return Movie.regular;
+	}
+}
+public int getPriceCode() {
+	return priceCode;
+}
+
+修改价格代号访问函数，让它们使用新类
+public void setPriceCode(int arg) {
+	private Price price1;
+	switch(arg) {
+	case regular:
+		price1 = new RegularPrice();
+		break;
+	case childrens:
+		price1 = new ChildrensPrice();
+		break;
+	case fresh:
+		price1 = new FreshPrice();
+		break;
+		default:
+			throw new IllegalArgumentException("Incorrect Price Code");
+	}
+}
+getCharge（）
+price类下
+public abstract class Price{
+	abstract int getPriceCode();
+	
+public double getCharge(int days) {
+	double result = 0;
+		switch(getPriceCode()) {
+		case Movie.regular:
+			result += 2;
+			if(days>2) 
+				result += (days-2)*1.5;
+			break;
+		case Movie.childrens:
+			result += 1.5;
+			if(days>3) 
+				result += (days-3)*1.5;
+			break;
+		case Movie.fresh:
+			result += days*3;
+			break;
+		}
+		return result;
+}
+}
+movie类下
+public double getCharge(int days) {
+	return price1.getCharge(days);
+	}
+
+处理price类下的getCharge下的SWITCH分支
+package price;
+import movie.Movie;
+//类似实现继承，不同的电影子类可返回不同的计价，然后将价格再返回到最后的价钱里
+public abstract class Price{
+	public abstract int getPriceCode();
+	public abstract double  getCharge(int days);
+}
+package price;
+import movie.Movie;
+
+public class ChildrensPrice extends Price{
+	public int getPriceCode() {
+		return Movie.childrens;
+	}
+	public double getCharge(int days) {
+		double result = 1.5;
+		if(days>3) 
+			result += (days-3)*1.5;
+		return result;
+	}
+}
+package price;
+
+import movie.Movie;
+
+public class FreshPrice extends Price{
+	public int getPriceCode() {
+		return Movie.fresh;
+	}
+public double getCharge(int days) {
+	 return days*3;
+}
+}
+package price;
+
+import movie.Movie;
+
+public class RegularPrice extends Price{
+	public int getPriceCode() {
+		return Movie.regular;
+	}
+	public double getCharge(int days) {
+		double result = 2;
+		if(days>2) 
+			result += (days-2)*1.5;
+		return result;
+	}
+	
+}
+修改getFrequentRenterPoints（）
+package price;
+import movie.Movie;
+//类似实现继承，不同的电影子类可返回不同的计价，然后将价格再返回到最后的价钱里
+public abstract class Price{
+	public abstract int getPriceCode();
+	public abstract double  getCharge(int days);
+	int getFrequentRenterPoints(int days) {
+			return 1;
+	}
+}
+movie类下
+public int getFrequentRenterPoints(int days) {
+	return price1.getFrequentRenterPoints(days);
+}

@@ -1,0 +1,42 @@
+getcharge()应该移到movie下边。使用语句要在对象自己的数据上使用
+
+movie类下
+public double getCharge(int days) {
+	double result = 0;
+		switch(getPriceCode()) {
+		case Movie.regular:
+			result += 2;
+			if(days>2) 
+				result += (days-2)*1.5;
+			break;
+		case Movie.childrens:
+			result += 1.5;
+			if(days>3) 
+				result += (days-3)*1.5;
+			break;
+		case Movie.fresh:
+			result += days*3;
+			break;
+		}
+		return result;
+	}
+
+rental类下
+public double getCharge() {
+	return movie.getCharge(days);
+	}
+
+getFrequentRenterPoints() 应该移到movie下边
+
+movie类下
+public int getFrequentRenterPoints(int days) {
+	if((getPriceCode() == Movie.fresh)&&days>1)
+	return 2;
+	else
+		return 1;
+}
+
+rental类下
+public int getFrequentRenterPoints() {
+	return movie.getFrequentRenterPoints(days);
+}
