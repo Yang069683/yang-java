@@ -12,7 +12,7 @@ private DBUtils(){
 }
 public void getUsersFormInputStream(String isName) {
 	try {
-	 FileInputStream fs=new FileInputStream(isName);
+     FileInputStream fs=new FileInputStream(isName);
    	 byte[] content=new byte[1024];
    	 int i=0;
    	 int conInteger=0;
